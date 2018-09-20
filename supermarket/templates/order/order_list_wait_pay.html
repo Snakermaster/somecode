@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <h3>待付款订单列表</h3>
+
+    <ul>
+        <!--订单信息展示-->
+        {% for order in orders %}
+            <li>
+                {% for goodorder in order.ordergoodsmodel_set.all %}
+                <a href="">
+                    <p>订单id:{{ order.o_num }}</p>
+
+                    <p>数量:{{ goodorder.goods_num }}</p>
+                    <p>商品名称:{{ goodorder.goods.productname }}</p>
+                        <li>
+                            <img src="{{ goodorder.goods.productimg }}" alt="">
+                        </li>
+                        <!--处理结束-->
+                </a>
+                {% endfor %}
+            </li>
+        {% endfor %}
+        <!--订单处理结束-->
+
+
+    </ul>
+
+
+{% endblock %}
