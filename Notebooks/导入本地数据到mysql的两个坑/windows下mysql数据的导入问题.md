@@ -35,7 +35,9 @@ windows下mysql数据的导入问题
 
 其实这个问题归根结底还是权限问题，这时我们需要右键点击计算机-->点击管理，出现如图：
 
-![ssss](/images/000.png)
+![ssss](
+        somecode/Notebooks/导入本地数据到mysql的两个坑/images/000.png
+      )
 
 依次点击服务和应用程序下的服务，选中mysql一栏，点击MySQL下的更多操作，出现mysql的基本属性设置如图：
 
