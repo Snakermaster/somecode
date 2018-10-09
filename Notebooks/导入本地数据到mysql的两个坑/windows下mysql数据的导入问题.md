@@ -12,7 +12,7 @@ windows下mysql数据的导入问题
 
    我们先来说第一个问题，由于mysql在安装的时候默认指定了一个数据导入和导出目录，所以当我们想从自定义的路径下导入数据是受到限制的，我们可以在mysql中使用命令"show variables like '%secure%';"查看详情，如下图所示：
 
-   ![222](https://github.com/Snakermaster/somecode/Notebooks/导入本地数据到mysql的两个坑/images/455.png)
+   ![222](http://github.com/Snakermaster/somecode/Notebooks/导入本地数据到mysql的两个坑/images/455.png)
 
 
 我们可以看到，secure_file_priv所对应的value即为mysql默认指定的目录，那么，我们应该从哪里去修改呢？
