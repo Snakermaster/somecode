@@ -1,0 +1,4 @@
+coreapi
+coreapi-cli
+djangorestframework
+Django

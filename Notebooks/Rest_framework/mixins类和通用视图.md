@@ -7,13 +7,12 @@
     我们需要导入两个包
     from rest_framework import mixins
     # 下面这个用于构建APIView
-    from rest_framework import
-    generics
-    在紧接着类下面声明
+    from rest_framework import generics
+    紧接着在类下面声明
     queryset = 模型名.objects.all()
     serializer_calss = 模型名Serializer
-    
-    
+
+
 generics.GenericAPIView ---> 构建APIViwe   
 ListModelMixin  ---> 遍历
 CreateModelMixin ---> 创建
