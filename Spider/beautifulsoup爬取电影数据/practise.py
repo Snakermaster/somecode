@@ -5,36 +5,45 @@ class Stack(object):
 		self.arr = []
 	
 	def counts(self):
-		pass
+		return len(self.arr)
 
 	def push(self,item):
-		pass
+		self.arr.append(item)
+		return "添加成功"
 
 	def pop(self):
-		pass
+		self.arr.pop()
+		return '删除成功'
 
 	def empty(self):
-		pass		
+		if len(self.arr):
+			return '非空'
+		return '为空'		
 
 	def full(self):
-		pass
+		if len(self.arr) == self.max_size:
+			return '已满'
+		return '未满'
 
 	def index(self,item):
-		pass
+		for i in len(self.arr):
+			if arr[i] == item:
+				return i
+			return '找不到该元素'
 
-	class Node(object):
-		"""docstring for Node"""
-		def __init__(self, item):
-			self.item = item
-			self.next_node = Node
+class Node(object):
+"""docstring for Node"""
+	def __init__(self, item):
+		self.item = item
+		self.next_node = Node
 
-	node1 = Node('first')
-	node2 = Node('second')
-	node3 = Node('Third')
+node1 = Node('first')
+node2 = Node('second')
+node3 = Node('Third')
 
-	head = node1
-	node1.next_node = node2
-	node2.next_node = node3
+head = node1
+node1.next_node = node2
+node2.next_node = node3
 
 
 class LinkedList(object):
@@ -42,7 +51,7 @@ class LinkedList(object):
 	
 	def __init__(self):
 		self.head = None
-		pass
+		self.end = None
 	
 	def append(self,item)
 		pass
@@ -72,8 +81,12 @@ for i in l:
 			
 
 
+LOAD DATA LOCAL INFILE 'C:\\Users\\Administrator\\Desktop\\datasets\\movielens\\ratings.dat' INTO TABLE tag FILEDS TERMINATED BY '::' LINES TERMINATED BY '\n' (userid,movieid,rating,timestamp)
 
 
 
+LOAD DATA INFILE 'C:\\Users\\Administrator\\Desktop\\datasets\\movielens\\movies.dat' INTO TABLE movies FIELDS TERMINATED BY '::'  ENCLOSED BY '"' LINES TERMINATED BY '\n';
 
+secure-file-priv
 
+show variables like '%secure%';
