@@ -15,17 +15,19 @@ Including another URLconf
 """
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-
 from api import views
+
 
 urlpatterns = [
     path('mobile_code/<str:tel>', views.mobile_code),
-    path('districts/', views.provinces, name='provinces'),
-    path('districts/<int:pid>', views.districts, name='districts'),
+    path('districts/', views.provinces, name='districts'),
+    path('districts/<int:pid>', views.districts, name='district'),
     path('estates/<int:distid>', views.EstateView.as_view(), name='estates'),
+    path('agents/<int:agentid>', views.AgentDetailView.as_view(), name='agent'),
 ]
 
 router = DefaultRouter()
 router.register('housetypes', views.HouseTypeViewSet)
+# router.register('agents', views.AgentViewSet)
 
 urlpatterns += router.urls

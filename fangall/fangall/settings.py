@@ -26,7 +26,7 @@ SECRET_KEY = 'uq7##@ciddcuz!-6qum!vgh_f-rc2!k2#ql867tm4!=zy+yx0#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # 注意这里的提示 在上线产品中一定不能够将DEBUG设置为True
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # 'ckeditor_uploader',
     # 'django_crontab',
     'common',
+    # 'debug_toolbar',
     # 'haystack',
     # 'common.apps.CommonConfig',
 ]
@@ -60,8 +61,12 @@ INSTALLED_APPS = [
 
 # 配置中间件
 MIDDLEWARE = [
+    # 调试工具栏中间件
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 解决跨域问题的中间件
     'corsheaders.middleware.CorsMiddleware',
+
+    # Django默认的中间件
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -69,13 +74,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     # 阻止60秒内重复发送短信的中间件
-    #'api.middlewares.block_sms_middleware',
+    'api.middlewares.block_sms_middleware',
 ]
 
+# DEBUG_TOOLBAR_CONFIG = {
+#     'JQUERY_URL': 'https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js',
+#     'SHOW_COLLAPSED': True,
+#     'SHOW_TOOLBAR_CALLBACK': lambda x: True,
+# }
 
 # 配置跨域白名单
 # CORS_ORIGIN_WHITELIST = ()
+# 配置是否跨域读取Cookie信息
 # CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'fangall.urls'
@@ -106,8 +118,22 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'fang',
-        'HOST': '120.77.222.217',
+        'HOST': '120.77.249.236',
         'PORT': 3306,
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'TIME_ZONE': 'Asia/Chongqing',
+        'TEST': {
+            'NAME': 'test_fang',
+            'CHARSET': 'utf8',
+            'TIME_ZONE': 'Asia/Chongqing',
+        }
+    },
+    'slave1': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'fang',
+        'HOST': '120.77.222.217',
+        'PORT': 3307,
         'USER': 'root',
         'PASSWORD': '123456',
         'TIME_ZONE': 'Asia/Chongqing',
@@ -115,10 +141,10 @@ DATABASES = {
 }
 
 # 配置数据库路由
-# DATABASE_ROUTERS = [
-#     'common.db_routers.DjangoDbRouter',
-#     'common.db_routers.MasterSlaveDbRouter',
-# ]
+DATABASE_ROUTERS = [
+    # 'common.db_routers.DjangoDbRouter',
+    'common.db_routers.MasterSlaveDbRouter',
+]
 
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 # 国际化配置
@@ -138,7 +164,8 @@ USE_TZ = True
 # 静态文件配置
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-# STATIC_ROOT = '/root/static'
+# python manage.py collectstatic
+STATIC_ROOT = '/root/project/static'
 
 # 媒体文件配置
 MEDIA_URL = '/media/'
@@ -150,7 +177,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': [
-            'redis://120.77.222.217:6379/0',
+            'redis://120.77.249.236:6379/0',
         ],
         'KEY_PREFIX': 'fangall',
         'OPTIONS': {
@@ -158,13 +185,13 @@ CACHES = {
             'CONNECTION_POOL_KWARGS': {
                 'max_connections': 500,
             },
-            'PASSWORD': '1qaz2wsx',
+            'PASSWORD': 'snaker',
         }
     },
     'page': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': [
-            'redis://120.77.222.217:6379/1',
+            'redis://120.77.249.236:6379/1',
         ],
         'KEY_PREFIX': 'fangall:page',
         'OPTIONS': {
@@ -172,13 +199,13 @@ CACHES = {
             'CONNECTION_POOL_KWARGS': {
                 'max_connections': 1000,
             },
-            'PASSWORD': '1qaz2wsx',
+            'PASSWORD': 'snaker',
         }
     },
     'session': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': [
-            'redis://120.77.222.217:6379/2',
+            'redis://120.77.249.236:6379/2',
         ],
         'KEY_PREFIX': 'fangall:session',
         'TIMEOUT': 1209600,
@@ -187,13 +214,13 @@ CACHES = {
             'CONNECTION_POOL_KWARGS': {
                 'max_connections': 1000,
             },
-            'PASSWORD': '1qaz2wsx',
+            'PASSWORD': 'snaker',
         }
     },
     'code': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': [
-            'redis://120.77.222.217:6379/3',
+            'redis://120.77.249.236:6379/3',
         ],
         'KEY_PREFIX': 'fangall:code',
         'OPTIONS': {
@@ -201,7 +228,7 @@ CACHES = {
             'CONNECTION_POOL_KWARGS': {
                 'max_connections': 500,
             },
-            'PASSWORD': '1qaz2wsx',
+            'PASSWORD': 'snaker',
         }
     },
 }
@@ -210,6 +237,8 @@ CACHES = {
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'session'
 
+# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
 # 配置Django-REST-Framework
 REST_FRAMEWORK = {
     # 配置默认页面大小
@@ -217,27 +246,27 @@ REST_FRAMEWORK = {
     # 配置默认的分页类
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 配置限流类
-    # 'DEFAULT_THROTTLE_CLASSES': (
-    #     'rest_framework.throttling.AnonRateThrottle',
-    #     'rest_framework.throttling.UserRateThrottle',
-    # ),
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ),
     # 配置访问次数限制
-    # 'DEFAULT_THROTTLE_RATES': {
-    #     'anon': '100/day',
-    #     'user': '1000/day'
-    # }
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day'
+    }
 }
 
 # 配置DRF扩展
 REST_FRAMEWORK_EXTENSIONS = {
     # 配置默认的缓存超时时间
-    # 'DEFAULT_CACHE_RESPONSE_TIMEOUT': 1800,
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 300,
     # 配置默认使用哪组缓存
-    # 'DEFAULT_USE_CACHE': 'default',
+    'DEFAULT_USE_CACHE': 'default',
     # 配置默认缓存单个对象的key函数
-    # 'DEFAULT_OBJECT_CACHE_KEY_FUNC': 'rest_framework_extensions.utils.default_object_cache_key_func',
+    'DEFAULT_OBJECT_CACHE_KEY_FUNC': 'rest_framework_extensions.utils.default_object_cache_key_func',
     # 配置默认缓存对象列表的key函数
-    # 'DEFAULT_LIST_CACHE_KEY_FUNC': 'rest_framework_extensions.utils.default_list_cache_key_func',
+    'DEFAULT_LIST_CACHE_KEY_FUNC': 'rest_framework_extensions.utils.default_list_cache_key_func',
 }
 
 # Celery的相关配置
@@ -302,7 +331,7 @@ LOGGING = {
         'django': {
             'handlers': ['console', 'file1', 'file2'],
             'propagate': True,
-            'level': 'INFO',
+            'level': 'DEBUG',
         },
     }
 }
@@ -315,13 +344,13 @@ LOGGING = {
 # ]
 
 # 邮件配置
-# EMAIL_HOST = 'smtp.ourwebsite.com'
-# EMAIL_PORT = 25
+EMAIL_HOST = 'smtp.126.com'
+EMAIL_PORT = 25
 
-# EMAIL_HOST_USER = 'admin@ourwebsite.com'
-# EMAIL_HOST_PASSWORD = '******'
-# EMAIL_USE_TLS = False
-# EMAIL_FROM = 'admin@ourwebsite.com'
+EMAIL_HOST_USER = 'jackfrued@126.com'
+EMAIL_HOST_PASSWORD = '1qaz2wsx'
+EMAIL_USE_TLS = True
+DEFAULT_EMAIL_FROM = 'jackfrued@126.com'
 
 # 配置Haystack
 # HAYSTACK_CONNECTIONS = {
@@ -336,17 +365,24 @@ LOGGING = {
 # HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # 如果需要配置HTTPS相关的东西需要先生成证书(权威证书/自签名证书)
-# SECURE_HSTS_SECONDS = 86400
-# SECURE_HSTS_PRELOAD = True
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-#
-# SECURE_CONTENT_TYPE_NOSNIFF = True
-#
-# SECURE_BROWSER_XSS_FILTER = True
-#
-# SECURE_SSL_REDIRECT = True
-#
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-#
-# X_FRAME_OPTIONS = 'DENY'
+
+# 配置需要使用HTTPS以及持续时间
+SECURE_HSTS_SECONDS = 86400
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# 让浏览器不要自作聪明推断内容类型
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# 开启对跨站脚本攻击的过滤
+SECURE_BROWSER_XSS_FILTER = True
+
+# 自动重定向到HTTPS
+SECURE_SSL_REDIRECT = True
+
+# Session标识和令牌需要安全传输
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# 拒绝用iframe加载网站页面避免点击劫持攻击
+X_FRAME_OPTIONS = 'DENY'

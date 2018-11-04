@@ -13,7 +13,7 @@
     serializer_calss = 模型名Serializer
 
 
-generics.GenericAPIView ---> 构建APIViwe   
+generics.GenericAPIView ---> 构建APIView 
 ListModelMixin  ---> 遍历
 CreateModelMixin ---> 创建
 RetrieveModelMixin ---> 检索

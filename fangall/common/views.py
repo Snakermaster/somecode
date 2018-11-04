@@ -3,16 +3,10 @@
 """
 from urllib.parse import quote
 
-from django.db import transaction
 from django.http import HttpResponse, StreamingHttpResponse, FileResponse
 
 from common.captcha import Captcha
 from common.utils import gen_captcha_text
-
-
-@transaction.atomic
-def foo(request):
-    pass
 
 
 def download_file(request):

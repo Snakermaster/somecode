@@ -11,6 +11,8 @@ from io import StringIO
 from urllib.error import URLError
 from urllib.parse import urlencode
 
+from fangall import app
+
 ALL_CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 SMS_SERVER = '106.ihuyi.com'
@@ -49,6 +51,7 @@ def gen_captcha_text(length=4):
     return code.getvalue()
 
 
+@app.task
 def send_short_message(tel, code):
     """发送短信"""
     params = urlencode({
