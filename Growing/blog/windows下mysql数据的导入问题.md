@@ -12,14 +12,14 @@ windows下mysql数据的导入问题
 
    我们先来说第一个问题，由于mysql在安装的时候默认指定了一个数据导入和导出目录，所以当我们想从自定义的路径下导入数据是受到限制的，我们可以在mysql中使用命令"show variables like '%secure%';"查看详情，如下图所示：
 
-   ![222](https://github.com/Snakermaster/somecode/blob/master/Notebooks/blog/images/455.png)
+   ![222](./images/455.png)
 
 
 我们可以看到，secure_file_priv所对应的value即为mysql默认指定的目录，那么，我们应该从哪里去修改呢？
 
 首先我们需要到mysql安装的磁盘目录下,找到ProgramData文件夹（注：由于该文件是隐藏文件，所以需要到‘组织’选项卡一栏中设置显示所有隐藏文件）：
 
-![111](https://github.com/Snakermaster/somecode/blob/master/Notebooks/blog/images/234.png)
+![111](./images/234.png)
 
 接下来我们来到my.ini配置文件处，如下图所示：
 
