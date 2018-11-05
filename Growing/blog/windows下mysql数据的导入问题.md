@@ -23,11 +23,11 @@ windows下mysql数据的导入问题
 
 接下来我们来到my.ini配置文件处，如下图所示：
 
-![123](https://github.com/Snakermaster/somecode/blob/master/Notebooks/blog/images/123.png)
+![123](./images/123.png)
 
 进入到该配置文件中，找到"secure-file-priv"一栏，并将其默认路径设定为‘’,如下图所示：
 
-![ooo](https://github.com/Snakermaster/somecode/blob/master/Notebooks/blog/images/456.png)
+![ooo](./images/456.png)
 
 此后，重启mysql ，运行“LOAD DATA INFILE 'C:\\Users\\Administrator\\Desktop\\datasets\\movielens\\ratings.dat' INTO TABLE ratings FIELDS TERMINATED BY '::'  ENCLOSED BY '"' LINES TERMINATED BY '\n';”你会发现，新的问题又出现了，那就是第二个坑--“errno:13-Permissiondenied”
 
@@ -35,11 +35,11 @@ windows下mysql数据的导入问题
 
 其实这个问题归根结底还是权限问题，这时我们需要右键点击计算机-->点击管理，出现如图：
 
-![ssss](https://github.com/Snakermaster/somecode/blob/master/Notebooks/blog/images/000.png)
+![ssss](./images/000.png)
 
 依次点击服务和应用程序下的服务，选中mysql一栏，点击MySQL下的更多操作，出现mysql的基本属性设置如图：
 
-![pps](https://github.com/Snakermaster/somecode/blob/master/Notebooks/blog/images/2324.png)
+![pps](./images/2324.png)
 
 走到这步就快成功了，点击登录选项卡，将登录身份切换至本地系统账户。返回上一个界面，重启mysql.
 
